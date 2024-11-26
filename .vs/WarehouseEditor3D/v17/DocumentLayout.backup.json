@@ -1,0 +1,71 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Boi Lipmann\\source\\repos\\WarehouseEditor3D\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{112A1A41-89A2-441E-8646-CB6ACFC43C15}|WarehouseEditor3D.vcxproj|C:\\Users\\Boi Lipmann\\source\\repos\\WarehouseEditor3D\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{112A1A41-89A2-441E-8646-CB6ACFC43C15}|WarehouseEditor3D.vcxproj|solutionrelative:main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{112A1A41-89A2-441E-8646-CB6ACFC43C15}|WarehouseEditor3D.vcxproj|C:\\Users\\Boi Lipmann\\Downloads\\glad.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "glad.c",
+              "DocumentMoniker": "C:\\Users\\Boi Lipmann\\Downloads\\glad.c",
+              "RelativeDocumentMoniker": "..\\..\\..\\Downloads\\glad.c",
+              "ToolTip": "C:\\Users\\Boi Lipmann\\Downloads\\glad.c",
+              "RelativeToolTip": "..\\..\\..\\Downloads\\glad.c",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAtwBgAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2024-11-26T10:41:58.4Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "main.cpp",
+              "DocumentMoniker": "C:\\Users\\Boi Lipmann\\source\\repos\\WarehouseEditor3D\\main.cpp",
+              "RelativeDocumentMoniker": "main.cpp",
+              "ToolTip": "C:\\Users\\Boi Lipmann\\source\\repos\\WarehouseEditor3D\\main.cpp",
+              "RelativeToolTip": "main.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-11-26T10:41:33.494Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 137,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:2:0:{b9f91511-5ca5-40ec-9726-f3e3a7e534e2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
