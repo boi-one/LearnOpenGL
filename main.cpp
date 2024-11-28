@@ -1,26 +1,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
-
-const char* vertexShaderSource = R"(#version 330 core
-			layout (location = 0) in vec3 aPos;
-			layout (location = 1) in vec3 aColor;
-
-			out vec3 ourColor;
-
-			void main()
-			{
-			    gl_Position = vec4(aPos, 1.0);
-				ourColor = aColor;
-			})";
-
-const char* fragmentShaderSource = R"(#version 330 core
-			out vec4 FragColor;
-			in vec3 ourColor;	
-			void main()
-			{
-				FragColor = vec4(ourColor, 1.0f);
-			})";
+#include "Shader.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
@@ -56,52 +37,15 @@ int main()
 		return -1;
 	}
 
-	unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertexShader, 1, &vertexShaderSource, 0);
-	glCompileShader(vertexShader);
-
-
-	//opengl
-	int  success;
-	char infoLog[512];
-	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-	if (!success) //check for errors in the vertex shader
-	{
-		glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
-	}
-
-	unsigned int fragmentShader;
-	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragmentShader, 1, &fragmentShaderSource, 0);
-	glCompileShader(fragmentShader);
-	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-	if (!success)
-	{
-		glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-		std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
-	}
-
-	unsigned int shaderProgram = glCreateProgram();
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragmentShader);
-	glLinkProgram(shaderProgram);
-
-	//check for errors
-	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-	if (!success) {
-		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-	}
-
-	//delete the shaders bc they are now on the gpu
-	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentShader);
+	Shader shader("shader.vert", "shader.frag");
 
 	// set up vertex data (and buffer(s)) and configure vertex attributes
 	float vertices[] = {
-		-0.5f, -0.5f, 0.0f,	1.0f, 0.0f, 0.0f,
-		0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
-		0.0f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f
+		//kijk goed uit dat de positions niet omgedraaid staan, dan kan het namelijk zijn dat je niks ziet
+		//position				//color
+		0.45f, -0.5f, 0.0f,		1.0f, 0.0f, 0.0f, //rechts
+		-0.45f, -0.5f, 0.0f,    0.0f, 1.0f, 0.0f, //links
+		0.0f, 0.5f, 0.0f,		0.0f, 0.0f, 1.0f  //top
 	};
 
 	unsigned int indices[] = {
@@ -136,7 +80,7 @@ int main()
 		glClearColor(0.45f, 0.55f, 0.6f, 1.f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glUseProgram(shaderProgram);
+		shader.use();
 
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
@@ -147,7 +91,6 @@ int main()
 	// optional: de-allocate all resources once they've outlived their purpose:
 	glDeleteVertexArrays(2, &VAO);
 	glDeleteBuffers(2, &VBO);
-	glDeleteProgram(shaderProgram);
 
 	glfwTerminate();
 	return 0;
