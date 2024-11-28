@@ -95,52 +95,49 @@ int main()
 	float vertices[] = {
 		-0.5f, 0.4f, 0.0f,
 		-0.8f, -0.1f, 0.0f,
-		-0.2f, -0.1f, 0.0f,
+		-0.2f, -0.1f, 0.0f
+	};
 
+	float vertices2[] = {
 		0.5f, 0.4f, 0.0f,
 		0.8f, -0.1f, 0.0f,
 		0.2f, -0.1f, 0.0f
-
-
-
-		/*-0.8f, 0.4f, 0.0f,
-		-0.1f, 0.4f, 0.0f,
-		-0.8f, -0.2f, 0.0f,
-
-		0.2f, 0.4f, 0.0f,
-		0.8f, 0.4f, 0.0f,
-		0.8f, -0.8f, 0.0f,*/
 	};
+
 	unsigned int indices[] = {
-		0, 1, 2,
-		3, 4, 5
+		0, 1, 2
 	};
 
 	unsigned int EBO; //(Element Buffer Object) volgorde van hoe de vertices getekend moeten worden?
-	unsigned int VAO; //(Vertex  Array  Object) volgorde van de vertex
-	unsigned int VBO; //(Vertex  Buffer Object) lijst van de vertices
+	unsigned int VAO, VAO2; //(Vertex  Array  Object) volgorde van de vertex
+	unsigned int VBO, VBO2; //(Vertex  Buffer Object) lijst van de vertices
 	glGenVertexArrays(1, &VAO);
+	glGenVertexArrays(1, &VAO2);
 	glGenBuffers(1, &VBO);
+	glGenBuffers(1, &VBO2);
 	glGenBuffers(1, &EBO);
 
+	//triangle 1
 	glBindVertexArray(VAO);
-
-	//send the vertex data to the vertex shader attributes (make a function, this code is used for every object youll draw)
-	//copy vertices to a buffer
-	glBindBuffer(GL_ARRAY_BUFFER, VBO); //assign the buffer to the VBO int
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW); //copy the data to the gpu
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
+	glBindBuffer(GL_ARRAY_BUFFER, VBO); //zet de actieve buffer naar de VBO
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW); //stuur de vertices naar de VBO	
 	//set the vertex attributes pointers
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+	//triangle 2
+	glBindVertexArray(VAO2);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO2);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices2), vertices2, GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
 	glBindVertexArray(0);
 
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	
 	while (!glfwWindowShouldClose(window))
 	{
 		processInput(window);
@@ -149,20 +146,19 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glUseProgram(shaderProgram);
+
 		glBindVertexArray(VAO);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
 
-		//glDrawArrays(GL_TRIANGLES, 0, 3);
-		//glDrawArrays(GL_TRIANGLES, 3, 3);
-
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
+		glBindVertexArray(VAO2);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
 	// optional: de-allocate all resources once they've outlived their purpose:
-	glDeleteVertexArrays(1, &VAO);
-	glDeleteBuffers(1, &VBO);
+	glDeleteVertexArrays(2, &VAO);
+	glDeleteBuffers(2, &VBO);
 	glDeleteProgram(shaderProgram);
 
 	glfwTerminate();
