@@ -6,14 +6,15 @@ const char* vertexShaderSource = R"(#version 330 core
 			layout (location = 0) in vec3 aPos;
 			void main()
 			{
-			   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);
+			    gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);
 			})";
 
 const char* fragmentShaderSource = R"(#version 330 core
+			uniform vec4 ourColor;
 			out vec4 FragColor;
 			void main()
 			{
-				FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+				FragColor = ourColor;
 			})";
 
 const char* fragmentShaderSource2 = R"(#version 330 core
@@ -170,6 +171,13 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glUseProgram(shaderProgram);
+
+		float timeValue = glfwGetTime();
+		float greenValue = (sin(timeValue) * 0.5f + 0.5f);
+		float redValue = (cos(timeValue) * 0.25f + 0.5f);
+		float blueValue = (sin(timeValue) * 2 + 0.5f);
+		int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
+		glUniform4f(vertexColorLocation, redValue, greenValue, blueValue, 1.0f);
 
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
