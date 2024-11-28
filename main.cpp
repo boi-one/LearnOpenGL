@@ -6,6 +6,9 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "include/stb_image.h"
 
+static float x = 0;
+static float y = 0;
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
 	glViewport(0, 0, width, height);
@@ -15,6 +18,17 @@ void processInput(GLFWwindow* window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
+	
+	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+		x++;
+	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+		x--;
+	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+		y--;
+	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+		y++;
+
+	std::cout << x << " " << y << std::endl;
 }
 
 int main()
@@ -46,10 +60,10 @@ int main()
 	//kijk goed uit dat de positions niet omgedraaid staan, dan kan het namelijk zijn dat je niks ziet
 	float vertices[] = {
 		// positions          // colors           // texture coords
-		 0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   0.5f, 0.5f, // top right
-		 0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   0.5f, 0.0f, // bottom right
+		 0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
+		 0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
 		-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-		-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 0.5f  // top left 
+		-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
 	};
 	unsigned int indices[] = {
 		0, 1, 3, // first triangle
@@ -138,6 +152,9 @@ int main()
 	while (!glfwWindowShouldClose(window))
 	{
 		processInput(window);
+
+		shader.setFloat("X", x);
+		shader.setFloat("Y", y);
 
 		glClearColor(0.45f, 0.55f, 0.6f, 1.f);
 		glClear(GL_COLOR_BUFFER_BIT);
