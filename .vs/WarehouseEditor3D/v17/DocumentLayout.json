@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\Boi Lipmann\\source\\repos\\WarehouseEditor3D\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{112A1A41-89A2-441E-8646-CB6ACFC43C15}|WarehouseEditor3D.vcxproj|C:\\Users\\Boi Lipmann\\source\\repos\\WarehouseEditor3D\\shader.vert||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{112A1A41-89A2-441E-8646-CB6ACFC43C15}|WarehouseEditor3D.vcxproj|solutionrelative:shader.vert||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{112A1A41-89A2-441E-8646-CB6ACFC43C15}|WarehouseEditor3D.vcxproj|C:\\Users\\Boi Lipmann\\source\\repos\\WarehouseEditor3D\\shader.frag||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{112A1A41-89A2-441E-8646-CB6ACFC43C15}|WarehouseEditor3D.vcxproj|solutionrelative:shader.frag||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{112A1A41-89A2-441E-8646-CB6ACFC43C15}|WarehouseEditor3D.vcxproj|C:\\Users\\Boi Lipmann\\source\\repos\\WarehouseEditor3D\\shader.vert||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{112A1A41-89A2-441E-8646-CB6ACFC43C15}|WarehouseEditor3D.vcxproj|solutionrelative:shader.vert||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{112A1A41-89A2-441E-8646-CB6ACFC43C15}|WarehouseEditor3D.vcxproj|C:\\Users\\Boi Lipmann\\source\\repos\\WarehouseEditor3D\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -30,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -42,26 +42,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "shader.frag",
               "DocumentMoniker": "C:\\Users\\Boi Lipmann\\source\\repos\\WarehouseEditor3D\\shader.frag",
               "RelativeDocumentMoniker": "shader.frag",
               "ToolTip": "C:\\Users\\Boi Lipmann\\source\\repos\\WarehouseEditor3D\\shader.frag",
               "RelativeToolTip": "shader.frag",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAATAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAB0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2024-11-28T13:39:39.239Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "shader.vert",
               "DocumentMoniker": "C:\\Users\\Boi Lipmann\\source\\repos\\WarehouseEditor3D\\shader.vert",
               "RelativeDocumentMoniker": "shader.vert",
               "ToolTip": "C:\\Users\\Boi Lipmann\\source\\repos\\WarehouseEditor3D\\shader.vert",
               "RelativeToolTip": "shader.vert",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAABCAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2024-11-28T12:04:05.069Z",
               "EditorCaption": ""
