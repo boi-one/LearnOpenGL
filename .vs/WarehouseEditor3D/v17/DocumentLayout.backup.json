@@ -5,9 +5,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{112A1A41-89A2-441E-8646-CB6ACFC43C15}|WarehouseEditor3D.vcxproj|C:\\Users\\Boi Lipmann\\source\\repos\\WarehouseEditor3D\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{112A1A41-89A2-441E-8646-CB6ACFC43C15}|WarehouseEditor3D.vcxproj|solutionrelative:main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{112A1A41-89A2-441E-8646-CB6ACFC43C15}|WarehouseEditor3D.vcxproj|C:\\Users\\Boi Lipmann\\Downloads\\glad.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -17,23 +14,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "glad.c",
-              "DocumentMoniker": "C:\\Users\\Boi Lipmann\\Downloads\\glad.c",
-              "RelativeDocumentMoniker": "..\\..\\..\\Downloads\\glad.c",
-              "ToolTip": "C:\\Users\\Boi Lipmann\\Downloads\\glad.c",
-              "RelativeToolTip": "..\\..\\..\\Downloads\\glad.c",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAtwBgAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2024-11-26T10:41:58.4Z"
             },
             {
               "$type": "Document",
@@ -43,7 +28,7 @@
               "RelativeDocumentMoniker": "main.cpp",
               "ToolTip": "C:\\Users\\Boi Lipmann\\source\\repos\\WarehouseEditor3D\\main.cpp",
               "RelativeToolTip": "main.cpp",
-              "ViewState": "AgIAABIAAAAAAAAAAAAAACwAAAAfAAAAAAAAAA==",
+              "ViewState": "AgIAAFAAAAAAAAAAAAAAAGUAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-11-26T10:41:33.494Z",
               "EditorCaption": ""
