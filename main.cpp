@@ -16,6 +16,13 @@ const char* fragmentShaderSource = R"(#version 330 core
 				FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);
 			})";
 
+const char* fragmentShaderSource2 = R"(#version 330 core
+			out vec4 FragColor;
+			void main()
+			{
+				FragColor = vec4(1.0f, 1.0f, 0.0f, 1.0f);
+			})";
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
 	glViewport(0, 0, width, height);
@@ -76,10 +83,26 @@ int main()
 		std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
 	}
 
+	unsigned int fragmentShader2;
+	fragmentShader2 = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(fragmentShader2, 1, &fragmentShaderSource2, 0);
+	glCompileShader(fragmentShader2);
+	glGetShaderiv(fragmentShader2, GL_COMPILE_STATUS, &success);
+	if (!success)
+	{
+		glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
+		std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
+	}
+
 	unsigned int shaderProgram = glCreateProgram();
 	glAttachShader(shaderProgram, vertexShader);
 	glAttachShader(shaderProgram, fragmentShader);
 	glLinkProgram(shaderProgram);
+
+	unsigned int shaderProgram2 = glCreateProgram();
+	glAttachShader(shaderProgram2, vertexShader);
+	glAttachShader(shaderProgram2, fragmentShader2);
+	glLinkProgram(shaderProgram2);
 
 	//check for errors
 	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
@@ -90,6 +113,7 @@ int main()
 	//delete the shaders bc they are now on the gpu
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
+	glDeleteShader(fragmentShader2);
 
 	// set up vertex data (and buffer(s)) and configure vertex attributes
 	float vertices[] = {
@@ -150,6 +174,8 @@ int main()
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 
+		glUseProgram(shaderProgram2);
+
 		glBindVertexArray(VAO2);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 
@@ -160,6 +186,7 @@ int main()
 	glDeleteVertexArrays(2, &VAO);
 	glDeleteBuffers(2, &VBO);
 	glDeleteProgram(shaderProgram);
+	glDeleteProgram(shaderProgram2);
 
 	glfwTerminate();
 	return 0;
