@@ -7,11 +7,15 @@ layout (location = 2) in vec2 aTextureCoord;
 out vec3 color;
 out vec2 textureCoord;
 
-uniform mat4 transform;
+uniform mat4 model;
+uniform mat4 view;
+uniform mat4 projection;
 
 void main()
 {
-    gl_Position = transform * vec4(aPos, 1.0);
+    //multiplied van rechts naar links
+    //              3   <---    2  <--- 1
+    gl_Position = projection * view * model * vec4(aPos, 1.0);
     color = aColor;
     textureCoord = aTextureCoord;
 }
