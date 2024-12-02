@@ -176,7 +176,20 @@ int main()
 	glUniform1i(glGetUniformLocation(shader.ID, "texture1"), 0);
 	shader.setInt("texture2", 1);
 
-	
+	glEnable(GL_DEPTH_TEST);
+
+	glm::vec3 cubePositions[] = {
+	glm::vec3(0.0f,  0.0f,  0.0f),
+	glm::vec3(2.0f,  5.0f, -15.0f),
+	glm::vec3(-1.5f, -2.2f, -2.5f),
+	glm::vec3(-3.8f, -2.0f, -12.3f),
+	glm::vec3(2.4f, -0.4f, -3.5f),
+	glm::vec3(-1.7f,  3.0f, -7.5f),
+	glm::vec3(1.3f, -2.0f, -2.5f),
+	glm::vec3(1.5f,  2.0f, -2.5f),
+	glm::vec3(1.5f,  0.2f, -1.5f),
+	glm::vec3(-1.3f,  1.0f, -1.5f)
+	};
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -196,10 +209,8 @@ int main()
 		int projectionLoc = glGetUniformLocation(shader.ID, "projection");
 		glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
-
-
 		glClearColor(0.45f, 0.55f, 0.6f, 1.f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, texture);
