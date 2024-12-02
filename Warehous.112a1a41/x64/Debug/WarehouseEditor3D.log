@@ -1,4 +1,10 @@
 ﻿  main.cpp
+C:\Users\Boi Lipmann\source\repos\WarehouseEditor3D\main.cpp(38,11): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Boi Lipmann\source\repos\WarehouseEditor3D\main.cpp(39,11): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Boi Lipmann\source\repos\WarehouseEditor3D\main.cpp(43,16): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Boi Lipmann\source\repos\WarehouseEditor3D\main.cpp(44,16): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Boi Lipmann\source\repos\WarehouseEditor3D\main.cpp(45,10): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Boi Lipmann\source\repos\WarehouseEditor3D\main.cpp(46,10): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   WarehouseEditor3D.vcxproj -> C:\Users\Boi Lipmann\source\repos\WarehouseEditor3D\x64\Debug\WarehouseEditor3D.exe
   'pwsh.exe' is not recognized as an internal or external command,
   operable program or batch file.

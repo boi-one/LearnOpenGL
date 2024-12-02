@@ -6,15 +6,92 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "include/stb_image.h"
 
+static float deltaTime = 0.0f;
+static float lastFrame = 0.0f;
+ 
+static float yaw = -90.0f;
+static float pitch = 0;
+
+static float lastX = 400, lastY = 300.f;
+
+float fov = 45.0f;
+glm::vec3 cameraPosition = glm::vec3(0.0f, 0.0f, 3.0f);
+glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
+glm::vec3 cameraDirection = glm::normalize(cameraPosition - cameraTarget); //pointing in the oposite direction
+glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));
+glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);
+glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+glm::vec3 direction;
+
+bool firstMouse = true;
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
 	glViewport(0, 0, width, height);
 }
 
+void mouse_callback(GLFWwindow* window, double xpos, double ypos)
+{
+	if (firstMouse)
+	{
+		lastX = xpos;
+		lastY = ypos;
+		firstMouse = false;
+	}
+
+	float xoffset = xpos - lastX;
+	float yoffset = lastY - ypos;
+	lastX = xpos;
+	lastY = ypos;
+
+	float sensitivity = 0.1f;
+	xoffset *= sensitivity;
+	yoffset *= sensitivity;
+
+	yaw += xoffset;
+	pitch += yoffset;
+
+	if (pitch > 89.0f)
+		pitch = 89.0f;
+	if (pitch < -89.0f)
+		pitch = -89.0f;
+
+	glm::vec3 direction;
+	direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+	direction.y = sin(glm::radians(pitch));
+	direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+	cameraFront = glm::normalize(direction);
+}
+
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+{
+	fov -= (float)yoffset;
+	if (fov < 1.0f)
+		fov = 1.0f;
+	if (fov > 45.0f)
+		fov = 45.0f;
+}
+
 void processInput(GLFWwindow* window)
 {
+	deltaTime = (float)glfwGetTime() - lastFrame;
+	lastFrame = deltaTime;
+
+	float speed = 0.01f;
+
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
+
+	/*if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+		z += speed * deltaTime;
+	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+		z += -speed * deltaTime;
+	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+		x += speed * deltaTime;
+	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+		x += -speed * deltaTime;*/
+
 }
 
 static int width = 800;
@@ -36,6 +113,9 @@ int main()
 	}
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetCursorPosCallback(window, mouse_callback);
+	glfwSetScrollCallback(window, scroll_callback);
 
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
@@ -191,11 +271,19 @@ int main()
 	glm::vec3(-1.3f,  1.0f, -1.5f)
 	};
 
-	float fov = 45.0f;
-
 	while (!glfwWindowShouldClose(window))
 	{
 		glfwGetFramebufferSize(window, &width, &height);
+
+		const float cameraSpeed = 0.05f * deltaTime; // adjust accordingly
+		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+			cameraPosition += cameraSpeed * cameraFront;
+		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+			cameraPosition -= cameraSpeed * cameraFront;
+		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+			cameraPosition -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+			cameraPosition += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 
 		processInput(window);
 
@@ -209,10 +297,10 @@ int main()
 
 		shader.use();
 
-		glm::mat4 view = glm::mat4(1.0f);
 		glm::mat4 projection = glm::mat4(1.0f);
 		projection = glm::perspective(glm::radians(fov), (float)width / (float)height, 0.1f, 100.0f);
-		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+		glm::mat4 view = glm::mat4(1.0f);
+		view = glm::lookAt(cameraPosition, cameraPosition + cameraFront, cameraUp);
 
 		shader.setMat4("projection", projection);
 		shader.setMat4("view", view);
