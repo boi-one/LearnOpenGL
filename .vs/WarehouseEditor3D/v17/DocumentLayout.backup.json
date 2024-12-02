@@ -48,7 +48,7 @@
               "RelativeDocumentMoniker": "shader.frag",
               "ToolTip": "C:\\Users\\Boi Lipmann\\source\\repos\\WarehouseEditor3D\\shader.frag",
               "RelativeToolTip": "shader.frag",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAABzAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAABWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2024-11-28T13:39:39.239Z",
               "EditorCaption": ""
@@ -61,7 +61,7 @@
               "RelativeDocumentMoniker": "shader.vert",
               "ToolTip": "C:\\Users\\Boi Lipmann\\source\\repos\\WarehouseEditor3D\\shader.vert",
               "RelativeToolTip": "shader.vert",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2024-11-28T12:04:05.069Z",
               "EditorCaption": ""
@@ -74,10 +74,9 @@
               "RelativeDocumentMoniker": "Shader.cpp",
               "ToolTip": "C:\\Users\\Boi Lipmann\\source\\repos\\WarehouseEditor3D\\Shader.cpp",
               "RelativeToolTip": "Shader.cpp",
-              "ViewState": "AgIAADIAAAAAAAAAAAAowC4AAAAmAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-11-28T11:07:02.57Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-28T11:07:02.57Z"
             },
             {
               "$type": "Document",
@@ -89,8 +88,7 @@
               "RelativeToolTip": "Shader.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-11-28T11:04:40.019Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-28T11:04:40.019Z"
             },
             {
               "$type": "Document",
@@ -100,7 +98,7 @@
               "RelativeDocumentMoniker": "main.cpp",
               "ToolTip": "C:\\Users\\Boi Lipmann\\source\\repos\\WarehouseEditor3D\\main.cpp",
               "RelativeToolTip": "main.cpp",
-              "ViewState": "AgIAAI4AAAAAAAAAAAAAAJwAAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAAHgAAAAAAAAAAAAAAJEAAABGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-11-26T10:41:33.494Z",
               "EditorCaption": ""
