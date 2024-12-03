@@ -34,6 +34,37 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
+glm::mat4 lookat(glm::vec3 position, glm::vec3 target, glm::vec3 up)
+{
+	glm::vec3 z = glm::normalize(position - target);
+	glm::vec3 x = glm::normalize(glm::cross(glm::normalize(up), z));
+	glm::vec3 y = glm::cross(z, x);
+
+	glm::mat4 rotation = glm::mat4(1.0f);
+	rotation[0][0] = x.x;
+	rotation[1][0] = x.y;
+	rotation[2][0] = x.z;
+
+	rotation[0][1] = y.x;
+	rotation[1][1] = y.y;
+	rotation[2][1] = y.z;
+
+	rotation[0][2] = z.x;
+	rotation[1][2] = z.y;
+	rotation[2][2] = z.z;
+
+	rotation[3][3] = 1;
+
+	glm::mat4 translation = glm::mat4(1.0f);
+	translation[3][0] = -position.x;
+
+	translation[3][1] = -position.y;
+	
+	translation[3][2] = -position.z;
+
+	return translation * rotation;
+}
+
 int main()
 {
 	glfwInit();
@@ -228,7 +259,7 @@ int main()
 		projection = glm::perspective(glm::radians(fov), (float)width / (float)height, 0.1f, 1000.0f);
 		glm::mat4 view = glm::mat4(1.0f);
 		view = glm::lookAt(cameraPosition, cameraPosition + cameraFront, cameraUp);
-
+		//view = lookat(cameraPosition, { 0.0f, 0.0f, 0.0f }, {0.0f, 1.0f, 0.0f});
 		shader.setMat4("projection", projection);
 		shader.setMat4("view", view);
 
