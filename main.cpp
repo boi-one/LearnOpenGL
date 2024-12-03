@@ -2,34 +2,12 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include "Shader.h"
+#include "Camera.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "include/stb_image.h"
 
-static float deltaTime = 0.0f;
-static float lastFrame = 0.0f;
- 
-static float yaw = -90.0f;
-static float pitch = 0;
-
-static float lastX = 400, lastY = 300.f;
-
-float fov = 45.0f;
-glm::vec3 cameraPosition = glm::vec3(0.0f, 0.0f, 3.0f);
-glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
-glm::vec3 cameraDirection = glm::normalize(cameraPosition - cameraTarget); //pointing in the oposite direction
-glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
-glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));
-glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);
-glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-glm::vec3 direction;
-
-bool firstMouse = true;
-
-static int width = 800;
-static int height = 600;
-
-void processInput(GLFWwindow* window);
+void processInput(GLFWwindow* window, Camera& camera);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -59,26 +37,37 @@ glm::mat4 lookat(glm::vec3 position, glm::vec3 target, glm::vec3 up)
 	translation[3][0] = -position.x;
 
 	translation[3][1] = -position.y;
-	
+
 	translation[3][2] = -position.z;
 
 	return translation * rotation;
 }
 
+static float deltaTime = 0.0f;
+static float lastFrame = 0.0f;
+
+static int screenWidth = 800;
+static int screenHeight = 600;
+
+float lastX = screenWidth / 2.0f;
+float lastY = screenHeight / 2.0f;
+
 int main()
 {
+	Camera camera({ 0.0f, 0.0f, 3.0f }, { 0.0f, 1.0f, 0.0f }, -90.0f, 0.0f);
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	GLFWwindow* window = glfwCreateWindow(width, height, "WarehouseEditor3D", 0, 0);
+	GLFWwindow* window = glfwCreateWindow(screenWidth, screenHeight, "WarehouseEditor3D", 0, 0);
 	if (!window)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;
 		glfwTerminate();
 		return -1;
 	}
+	glfwSetWindowUserPointer(window, &camera);
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -94,7 +83,7 @@ int main()
 	Shader shader("shader.vert", "shader.frag");
 
 	// set up vertex data (and buffer(s)) and configure vertex attributes
-	//kijk goed uit dat de positions niet omgedraaid staan, dan kan het namelijk zijn dat je niks ziet
+	//kijk goed uit dat de positions niet omgedraaid staan, dan kan het namelijk zijn dat je niks ziet 
 	float vertices[] = {
 		//X		Y	   Z	  R	    G	  B	     U	   V
 		 -0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 1.0f,  0.0f, 0.0f,
@@ -241,9 +230,9 @@ int main()
 
 	while (!glfwWindowShouldClose(window))
 	{
-		glfwGetFramebufferSize(window, &width, &height);
+		glfwGetFramebufferSize(window, &screenWidth, &screenHeight);
 
-		processInput(window);
+		//processInput(window, camera);
 
 		glClearColor(0.45f, 0.55f, 0.6f, 1.f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -256,9 +245,9 @@ int main()
 		shader.use();
 
 		glm::mat4 projection = glm::mat4(1.0f);
-		projection = glm::perspective(glm::radians(fov), (float)width / (float)height, 0.1f, 1000.0f);
+		projection = glm::perspective(glm::radians(camera.fov), (float)screenWidth / (float)screenHeight, 0.1f, 1000.0f);
 		glm::mat4 view = glm::mat4(1.0f);
-		view = glm::lookAt(cameraPosition, cameraPosition + cameraFront, cameraUp);
+		view = glm::lookAt(camera.position, camera.position + camera.front, camera.up);
 		//view = lookat(cameraPosition, { 0.0f, 0.0f, 0.0f }, {0.0f, 1.0f, 0.0f});
 		shader.setMat4("projection", projection);
 		shader.setMat4("view", view);
@@ -295,67 +284,52 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
-	if (firstMouse)
+	Camera* camera = static_cast<Camera*>(glfwGetWindowUserPointer(window));
+
+	std::cout << "x " << xpos << " y " << ypos << std::endl;
+
+	if (camera->firstMouse)
 	{
-		lastX = (float)xpos;
-		lastY = (float)ypos;
-		firstMouse = false;
+		lastX = xpos;
+		lastY = ypos;
+		camera->firstMouse = false;
 	}
 
 	float xoffset = xpos - lastX;
-	float yoffset = lastY - ypos;
+	float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
+
 	lastX = xpos;
 	lastY = ypos;
 
-	float sensitivity = 0.1f;
-	xoffset *= sensitivity;
-	yoffset *= sensitivity;
-
-	yaw += xoffset;
-	pitch += yoffset;
-
-	if (pitch > 89.0f)
-		pitch = 89.0f;
-	if (pitch < -89.0f)
-		pitch = -89.0f;
-
-	glm::vec3 direction;
-	direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-	direction.y = sin(glm::radians(pitch));
-	direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-	cameraFront = glm::normalize(direction);
+	camera->ProcessMouseMovement(xoffset, yoffset);
 }
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
-	fov -= (float)yoffset;
-	if (fov < 1.0f)
-		fov = 1.0f;
-	if (fov > 45.0f)
-		fov = 45.0f;
+	Camera* camera = static_cast<Camera*>(glfwGetWindowUserPointer(window));
+
+	//camera->ProcessMouseScroll();
 }
 
-void processInput(GLFWwindow* window)
+void processInput(GLFWwindow* window, Camera& camera)
 {
-	float currentFrame = glfwGetTime();
+	float currentFrame = (float)glfwGetTime();
 	deltaTime = currentFrame - lastFrame;
 	lastFrame = currentFrame;
 
-	std::cout << 1/deltaTime << std::endl;
+	std::cout << 1 / deltaTime << std::endl;
 
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
 
-	float cameraSpeed = 2.5f * deltaTime; // adjust accordingly
-	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
-		cameraSpeed = 25.f * deltaTime;	
+
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		cameraPosition += cameraSpeed * glm::vec3(cameraFront.x, 0, cameraFront.z);
+		camera.ProcessKeyboard(Forward, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		cameraPosition -= cameraSpeed * glm::vec3(cameraFront.x, 0, cameraFront.z);;
+		camera.ProcessKeyboard(Backward, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		cameraPosition -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+		camera.ProcessKeyboard(Left, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		cameraPosition += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+		camera.ProcessKeyboard(Right, deltaTime);
 
 }
