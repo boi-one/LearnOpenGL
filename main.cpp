@@ -232,7 +232,7 @@ int main()
 	{
 		glfwGetFramebufferSize(window, &screenWidth, &screenHeight);
 
-		//processInput(window, camera);
+		processInput(window, camera);
 
 		glClearColor(0.45f, 0.55f, 0.6f, 1.f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -244,12 +244,10 @@ int main()
 
 		shader.use();
 
-		glm::mat4 projection = glm::mat4(1.0f);
-		projection = glm::perspective(glm::radians(camera.fov), (float)screenWidth / (float)screenHeight, 0.1f, 1000.0f);
-		glm::mat4 view = glm::mat4(1.0f);
-		view = glm::lookAt(camera.position, camera.position + camera.front, camera.up);
-		//view = lookat(cameraPosition, { 0.0f, 0.0f, 0.0f }, {0.0f, 1.0f, 0.0f});
+		glm::mat4 projection = glm::perspective(glm::radians(camera.fov), (float)screenWidth / (float)screenHeight, 0.1f, 1000.0f);
 		shader.setMat4("projection", projection);
+		
+		glm::mat4 view = camera.GetViewMatrix();
 		shader.setMat4("view", view);
 
 		glBindVertexArray(VAO);
@@ -286,8 +284,6 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
 	Camera* camera = static_cast<Camera*>(glfwGetWindowUserPointer(window));
 
-	std::cout << "x " << xpos << " y " << ypos << std::endl;
-
 	if (camera->firstMouse)
 	{
 		lastX = xpos;
@@ -317,7 +313,7 @@ void processInput(GLFWwindow* window, Camera& camera)
 	deltaTime = currentFrame - lastFrame;
 	lastFrame = currentFrame;
 
-	std::cout << 1 / deltaTime << std::endl;
+	std::cout << "FPS: " << 1 / deltaTime << " deltaTime: " << deltaTime << std::endl;
 
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);

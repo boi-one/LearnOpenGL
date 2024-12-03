@@ -2,6 +2,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <iostream>
 
 enum CameraMovement
 {
@@ -28,10 +29,11 @@ public:
 	float fov = 45.0f;
 	bool firstMouse = true;
 
-	Camera(glm::vec3 camPosition, glm::vec3 camUp, float camYaw, float camPitch)
+	Camera(glm::vec3 camPosition, glm::vec3 camUp = glm::vec3(0.0f, 1.0f, 0.0f), float camYaw = -90.0f, float camPitch = 0.0f)
 	{
 		position = camPosition;
 		up = camUp;
+		worldUp = up;
 		yaw = camYaw;
 		pitch = camPitch;
 		UpdateCameraVectors();
